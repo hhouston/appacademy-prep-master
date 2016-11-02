@@ -14,23 +14,15 @@ class XmlDocument
   end
 
   def newline
-    if indention == true
-      "\n"
-    else
-      ""
-    end
+    @indention ? "\n" : ""
   end
 
   def indent
-    if indention == true
-      @indention_length += 1
-    end
+    @indention_length += 1 if @indention
   end
 
   def unindent
-    if indention == true
-      @indention_length -= 1
-    end
+    @indention_length -= 1 if @indention
   end
 
   def tabspace
@@ -38,11 +30,9 @@ class XmlDocument
   end
 
   def attr_strings(attrs)
-    # attrs.map do |key, value|
-    #   "#{key}=\"#{value}\""
-    # end
-    attrs.map { |key, val| "#{key}=\"#{val}\"" }
-
+    attrs.map do |key, value|
+      "#{key}=\"#{value}\""
+    end
   end
 
   def tag_body(method_name, attrs)
@@ -76,17 +66,3 @@ class XmlDocument
 
 
 end
-
-@xml = XmlDocument.new(true)
-
-xml_string =
-    @xml.hello do
-      @xml.goodbye do
-        @xml.come_back do
-          @xml.ok_fine(:be => "that way")
-        end
-      end
-    end
-
-p xml_string
-
