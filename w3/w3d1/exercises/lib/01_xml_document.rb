@@ -64,5 +64,4 @@ class XmlDocument
     end
   end
 
-
 end
