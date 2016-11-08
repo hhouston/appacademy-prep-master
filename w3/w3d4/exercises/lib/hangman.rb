@@ -87,5 +87,5 @@ class ComputerPlayer
 end
 
 # @comp = ComputerPlayer.new(["foobar"])
-# @comp.pick_a_secret_word
-# p @comp.check_guess("z")
+# @com'p.pick_a_secret_word
+# p @comp.check_guess("z")'
