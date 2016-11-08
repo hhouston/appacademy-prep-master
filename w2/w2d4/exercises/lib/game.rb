@@ -24,7 +24,7 @@ class Game
       game_winner.display(board)
       puts "#{game_winner.name} wins!"
     else
-      puts "Cat's game"
+      puts "Cat scratch"
     end
   end
 
@@ -35,13 +35,21 @@ class Game
   end
 
   def game_winner
-    return player1 if board.winner == player1.mark
-    return player2 if board.winner == player2.mark
-    nil
+    if board.winner == player1.mark
+      return player1
+    elsif board.winner == player2.mark
+      return player2
+    else
+      nil
+    end
   end
 
   def switch_players!
-    self.current_player = current_player == player1 ? player2 : player1
+    if @current_player == @player1
+      @current_player = @player2
+    else
+      @current_player == @player1
+    end
   end
 end
 
@@ -50,8 +58,8 @@ if $PROGRAM_NAME == __FILE__
   print "Enter your name: "
   name = gets.chomp.strip
   human = HumanPlayer.new(name)
-  garry = ComputerPlayer.new('garry')
+  hunter = ComputerPlayer.new('Hunter')
 
-  new_game = Game.new(human, garry)
+  new_game = Game.new(human, hunter)
   new_game.play
 end

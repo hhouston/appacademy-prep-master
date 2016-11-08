@@ -63,8 +63,8 @@ class Board
 
   def random_pos
     rand = Random.new
-    col = rand(@grid.first.length-1)
-    row = rand(@grid.count-1)
+    col = rand(@grid.length)
+    row = rand(@grid.count)
     pos = [col,row]
     pos
   end

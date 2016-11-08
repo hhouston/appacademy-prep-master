@@ -49,7 +49,7 @@ class BattleshipGame
   end
 
   def declare_winner
-    p "You win!"
+    p "Winner!"
   end
 
   def display_status
