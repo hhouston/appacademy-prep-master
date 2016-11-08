@@ -14,28 +14,20 @@ class Code
   'p' => :purple, }
 
   def self.parse(peg_string)
-    # peg_array = []
-    # peg_string.each_char.with_index(0) do |char, i|
-    #   if PEGS.has_key?(char.downcase)
-    #     peg_array[i] = PEGS[char.downcase]
-    #   else
-    #     raise 'An error has occured'
-    #   end
-    # end
-    #
-    # Code.new(peg_array)
-    # factory method
-    pegs = peg_string.split("").map do |letter|
-      raise "parse error" unless PEGS.has_key?(letter.downcase)
-
-      PEGS[letter.downcase]
+    peg_array = []
+    peg_string.each_char.with_index(0) do |char, i|
+      if PEGS.has_key?(char.downcase)
+        peg_array[i] = PEGS[char.downcase]
+      else
+        raise 'An error has occured'
+      end
     end
 
-    Code.new(pegs)
+    Code.new(peg_array)
   end
 
   def self.random
-    p peg_rand = PEGS.values.sample(4)
+    peg_rand = PEGS.values.sample(4)
 
     Code.new(peg_rand)
   end

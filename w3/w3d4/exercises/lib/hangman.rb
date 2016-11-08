@@ -35,7 +35,7 @@ class Hangman
     end
 
     def won?
-
+      @board.all?
     end
 end
 
@@ -49,9 +49,37 @@ class HumanPlayer
     puts "Enter a guess"
     gets(1).chomp
   end
+
+  def pick_secret_word
+    p "enter length of secret word"
+
+    begin
+      Integer(gets(1).chomp)
+    rescue ArgumentError
+      p "error entering length"
+      retry
+    end
+  end
+
+  def check_guess(guess)
+    #test
+    p guess
+    gets.chomp.split(",").map { |i_str| Integer(i_str) }
+
+  end
+
+  def handle_response(guess, response)
+    puts "Found #{guess} at positions #{response}"
+  end
 end
 
 class ComputerPlayer
+
+  attr_reader :candidate_words
+
+  def self.player_with_dict_file(dict_file_name)
+    ComputerPlayer.new(File.readlines(dict_file_name).map(&:chomp))
+  end
 
   def initialize (dictionary)
     @dictionary = dictionary
@@ -72,20 +100,60 @@ class ComputerPlayer
   end
 
   def register_secret_length(length)
-    @available_words = @dictionary.select do |word|
+    @candidate_words = @dictionary.select do |word|
       word if word.length == length
     end
   end
 
   def handle_response(guess, index_array)
-    p 'handle'
+
+    @candidate_words.reject! do |word|
+      should_delete = false
+
+      word.split("").each_with_index do |letter, index|
+        if (letter == guess) && (!index_array.include?(index))
+          should_delete = true
+          break
+        elsif (letter != guess) && (index_array.include?(index))
+          should_delete = true
+          break
+        end
+      end
+
+      should_delete
+    end
+
+  end
+
+  def require_secret
+    @secret_word
   end
 
   def guess(board)
 
+    p @candidate_words
+
+    freq_table = freq_table(board)
+
+    most_frequent_letters = freq_table.sort_by { |letter, count| count }
+
+    letter, _ = most_frequent_letters.last
+    p letter
+    p _
+
+    letter
+  end
+
+  def freq_table(board)
+
+    freq_table = Hash.new(0)
+    @candidate_words.each do |word|
+      board.each_with_index do |letter, index|
+
+        freq_table[word[index]] += 1 if letter.nil?
+      end
+    end
+
+    freq_table
   end
 end
-
-# @comp = ComputerPlayer.new(["foobar"])
-# @com'p.pick_a_secret_word
-# p @comp.check_guess("z")'
