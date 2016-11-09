@@ -1,11 +1,10 @@
 class Hangman
     attr_reader :guesser, :referee, :board
-    MAX_GUESSES = 8
 
     def initialize(players)
       @guesser = players[:guesser]
       @referee = players[:referee]
-      @num_remaining_guesses = MAX_GUESSES
+      @num_remaining_guesses = 8
     end
 
     def play
@@ -64,7 +63,10 @@ class HumanPlayer
   def check_guess(guess)
     #test
     p guess
-    gets.chomp.split(",").map { |i_str| Integer(i_str) }
+    gets.chomp.split(",").map do |i_str|
+
+      raise "error: input" unless Integer(i_str)
+    end
 
   end
 
@@ -138,8 +140,8 @@ class ComputerPlayer
     most_frequent_letters = freq_table.sort_by { |letter, count| count }
 
     letter, _ = most_frequent_letters.last
-    p letter
-    p _
+    # p letter
+    # p _
 
     letter
   end

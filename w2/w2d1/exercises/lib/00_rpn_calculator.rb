@@ -85,7 +85,7 @@ end
 # end
 
 
-@calculator = RPNCalculator.new
+# @calculator = RPNCalculator.new
 # @calculator.push(2)
 # @calculator.push(3)
 # @calculator.push(4)
